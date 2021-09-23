@@ -14,8 +14,8 @@
   <mat-card-content>
     <form fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Phone Number" [formControl]="sms" type="sms" sms name="sms"
-          autocomplete="username sms" />
+        <input matInput placeholder="Phone Number or email" [formControl]="smsOrEmail" type="smsOrEmail" smsOrEmail name="smsOrEmail"
+          autocomplete="username sms or email" />
       </mat-form-field>
     </form>
   </mat-card-content>
