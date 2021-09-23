@@ -35,6 +35,9 @@ export class PrivateComponent implements OnInit {
     this.errorMessage_.next('');
     try {
       const userDetails = await this.auth.getUserDetails();
+      console.log('USER DETAILS: ', userDetails);
+      const session = await this.auth.getSession();
+      console.log('SESSSION: ', session);
       userDetails.forEach(detail => {
         const control = new FormControl(detail.getValue());
         this.userDetailsForm.addControl(detail.getName(), control);

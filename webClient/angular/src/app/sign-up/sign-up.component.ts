@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 export class SignUpComponent {
 
   sms = new FormControl('');
+  email = new FormControl('');
   fullName = new FormControl('');
 
   private busy_ = new BehaviorSubject(false);
@@ -30,7 +31,7 @@ export class SignUpComponent {
     this.errorMessage_.next('');
     this.busy_.next(true);
     try {
-      await this.auth.signUp(this.sms.value, this.fullName.value);
+      await this.auth.signUp(this.sms.value, this.email.value, this.fullName.value);
       await this.auth.signIn(this.sms.value);
       this.router.navigate(['/enter-secret-code']);
     } catch (err) {

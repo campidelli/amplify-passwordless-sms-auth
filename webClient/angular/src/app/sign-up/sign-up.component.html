@@ -20,6 +20,9 @@
         <input matInput placeholder="Phone Number (e.g. +12065551211)" [formControl]="sms" type="sms" sms name="sms"
           autocomplete="username sms" />
       </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="E-mail" [formControl]="email" type="email" email name="email" />
+      </mat-form-field>
     </form>
   </mat-card-content>
 

@@ -5,6 +5,7 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class AuthService {
     this.window = this.document.defaultView;
   }
 
-  public async signIn(sms: string) {
-    this.cognitoUser = await Auth.signIn(sms);
+  public async signIn(smsOrEmail: string) {
+    this.cognitoUser = await Auth.signIn(smsOrEmail);
   }
 
   public async signOut() {
@@ -36,12 +37,14 @@ export class AuthService {
     return this.cognitoUser.challengeParam;
   }
 
-  public async signUp(sms: string, fullName: string) {
+  public async signUp(sms: string, email: string, fullName: string) {
     const params = {
-      username: sms,
+      username: uuidv4(),
       password: this.getRandomString(30),
       attributes: {
-        name: fullName
+        name: fullName,
+        email: email,
+        phone_number: sms
       }
     };
     await Auth.signUp(params);
@@ -73,4 +76,10 @@ export class AuthService {
     return await Auth.userAttributes(this.cognitoUser);
   }
 
+  public async getSession() {
+    if (!this.cognitoUser) {
+      this.cognitoUser = await Auth.currentAuthenticatedUser();
+    }
+    return await Auth.currentSession();
+  }
 }
